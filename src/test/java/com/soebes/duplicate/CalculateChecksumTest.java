@@ -16,6 +16,7 @@ class CalculateChecksumTest {
     //File file = new File("/Users/khmarbaise/Bilder/20200216_221735.jpg");
     ChecksumResult checksumResult = calcuateChecksum.forFile(file);
     
+    
     System.out.println("readBytes = " + checksumResult.getReadBytes());
     System.out.println("mdbytes = " + toHex(checksumResult.getDigest()));
   }
