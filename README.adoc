@@ -1,0 +1,37 @@
+= Performance Concat
+
+This project is inteded to measure the
+performance differences between the following
+two code parts:
+
+Try to measure the difference between the following:
+
+[source,java]
+.Benachmark.java
+----
+return content.getFancyStuffs().stream().flatMap(item -> {
+  ArrayList<Element> objects = new ArrayList<>();
+  objects.add(item.getElement());
+  objects.addAll(item.getElements());
+  return objects.stream();
+}).collect(Collectors.toList());
+----
+
+and:
+
+[source,java]
+.filename.java
+----
+return content.getFancyStuffs()
+  .stream()
+  .flatMap(fs -> Stream.concat(Stream.of(fs.getElement()), fs.getElements().stream()))
+  .collect(Collectors.toList());
+----
+
+
+
+
+
+Visualize the results:
+
+https://jmh.morethan.io/
