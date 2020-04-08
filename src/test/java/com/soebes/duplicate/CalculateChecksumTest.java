@@ -27,8 +27,6 @@ class CalculateChecksumTest {
     //File file = new File("/Users/khmarbaise/Bilder/20200216_221735.jpg");
     ChecksumResult checksumResult = calcuateChecksum.forFile(resourceAsStream);
     
-    System.out.println("readBytes = " + checksumResult.getReadBytes());
-    System.out.println("mdbytes = " + anotherToHex(checksumResult.getDigest()));
     assertThat(checksumResult).satisfies(s -> {
       assertThat(s.getReadBytes()).isEqualTo(15);
       assertThat(s.getDigest()).containsExactly( //
@@ -41,14 +39,6 @@ class CalculateChecksumTest {
         0x22, 0x9E, 0xC7, 0x68, 0x18, 0x02, 0x84, 0x3F, //
         0xBE, 0x15, 0x58, 0x42, 0xE0, 0x80, 0x49, 0xCF);
     });
-  }
-  
-  String anotherToHex(byte[] mdbytes) {
-    StringBuilder sb = new StringBuilder(mdbytes.length * 2);
-    for (byte mdbyte : mdbytes) {
-      sb.append(String.format("%02X", mdbyte));
-    }
-    return sb.toString();
   }
   
 }
