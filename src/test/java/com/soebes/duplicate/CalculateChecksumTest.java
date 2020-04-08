@@ -19,12 +19,10 @@ class CalculateChecksumTest {
   }
   
   @Test
-  void first_test() throws IOException {
+  void defined_content_should_calculate_the_given_result() throws IOException {
     
     InputStream resourceAsStream = this.getClass().getResourceAsStream("/defined-content.file");
     
-    //File file = new File("/Users/khmarbaise/Bilder/20190824_210637.mp4");
-    //File file = new File("/Users/khmarbaise/Bilder/20200216_221735.jpg");
     ChecksumResult checksumResult = calcuateChecksum.forFile(resourceAsStream);
     
     assertThat(checksumResult).satisfies(s -> {
