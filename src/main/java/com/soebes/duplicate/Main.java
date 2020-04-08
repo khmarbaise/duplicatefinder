@@ -9,9 +9,9 @@ public class Main {
   
   public static void main(String[] args) {
     try {
-      CalcuateChecksum cc = new CalcuateChecksum();
+      CalcuateChecksum calcuateChecksum = new CalcuateChecksum();
       for (String arg : args) {
-        ChecksumResult checksumResult = cc.forFile(new File(arg));
+        ChecksumResult checksumResult = calcuateChecksum.forFile(new File(arg));
         System.out.println("File: " + arg);
         System.out.println("      Size: " + String.format(Locale.GERMANY, "%,d",
           checksumResult.getReadBytes()) + " bytes.");
