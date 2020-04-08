@@ -16,7 +16,7 @@ public class CalcuateChecksum {
   
   public ChecksumResult forFile(File file) throws IOException {
     try (FileInputStream fis = new FileInputStream(file)) {
-      byte[] dataBytes = new byte[64 * 1024];
+      byte[] dataBytes = new byte[8 * 1024];
       
       long readBytes = 0L;
       int nread = 0;
