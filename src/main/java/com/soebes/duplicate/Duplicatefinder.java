@@ -35,6 +35,8 @@ public class Duplicatefinder {
       List<ChecksumForFileResult> checkSumResults = fileCollection.parallelStream()
         .map(checksumForFile)
         .collect(Collectors.toList());
+  
+      long readBytesTotal = checkSumResults.stream().mapToLong(s -> s.getReadBytes()).sum();
       
       checkSumResults.stream().forEach(item -> {
         System.out.print(Convert.toHex(item.getDigest()));
@@ -50,6 +52,7 @@ public class Duplicatefinder {
         .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue()));
       
       System.out.println("Number of duplicates:" + collect.size());
+      
       for (Map.Entry<ByteArrayWrapper, List<ChecksumForFileResult>> element : collect.entrySet()) {
         System.out.println("CheckSum: " + Convert.toHex(element.getKey()));
         
@@ -57,8 +60,8 @@ public class Duplicatefinder {
           System.out.print("  " + item.getFileName() + " (");
           System.out.println(formatting(item.getReadBytes()));
         }
-        
       }
+      System.out.println("readBytesTotal = " + formatting(readBytesTotal));
     } catch (IOException e) {
       e.printStackTrace();
     }

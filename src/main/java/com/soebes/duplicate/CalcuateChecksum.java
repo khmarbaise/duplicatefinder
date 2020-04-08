@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class CalcuateChecksum {
   
-  private static final int BUFFER_SIZE = 8 * 1024;
+  private static final int BUFFER_SIZE = 64 * 1024;
   
   private MessageDigest messageDigest;
   
