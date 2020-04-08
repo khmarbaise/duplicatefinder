@@ -21,12 +21,11 @@ public class Duplicatefinder {
         .collect(Collectors.toList());
   
       for (Path file : collect) {
-        CalcuateChecksum calcuateChecksum = new CalcuateChecksum();
-        ChecksumResult checksumResult = calcuateChecksum.forFile(file.toFile());
-        System.out.println("File: " + file);
+        ChecksumForFileResult checksumForFileResult = new ChecksumForFile().forFile(file);
+        System.out.println("File: " + checksumForFileResult.getFileName());
         System.out.println("      Size: " + String.format(Locale.GERMANY, "%,d",
-          checksumResult.getReadBytes()) + " bytes.");
-        System.out.println("   SHA-512: " + Convert.toHex(checksumResult.getDigest()));
+          checksumForFileResult.getReadBytes()) + " bytes.");
+        System.out.println("   SHA-512: " + Convert.toHex(checksumForFileResult.getDigest()));
       }
   
     } catch (IOException | NoSuchAlgorithmException e) {
