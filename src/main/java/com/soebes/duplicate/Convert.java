@@ -12,5 +12,12 @@ public final class Convert {
     }
     return sb.toString();
   }
+  public static String toHex(ByteArrayWrapper mdbytes) {
+    StringBuilder sb = new StringBuilder(mdbytes.getByteArray().length * 2);
+    for (byte mdbyte : mdbytes.getByteArray()) {
+      sb.append(String.format("%02X", mdbyte));
+    }
+    return sb.toString();
+  }
   
 }
