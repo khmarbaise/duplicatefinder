@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class ByteArrayWrapper {
   
-  private byte[] byteArray;
+  private final byte[] byteArray;
   
   public ByteArrayWrapper(byte[] byteArray) {
     this.byteArray = byteArray;
@@ -15,7 +15,7 @@ public class ByteArrayWrapper {
   }
   
   @Override
-  public boolean equals(Object o) {
+  public final boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -27,7 +27,7 @@ public class ByteArrayWrapper {
   }
   
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     return Arrays.hashCode(byteArray);
   }
 }
