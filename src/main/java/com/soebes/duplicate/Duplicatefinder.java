@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class Duplicatefinder {
   
@@ -30,37 +33,36 @@ public class Duplicatefinder {
       
       List<Path> fileCollection = Files.list(Paths.get(args[0]))
         .filter(Files::isRegularFile)
-        .collect(Collectors.toList());
+        .collect(toList());
       
       List<ChecksumForFileResult> checkSumResults = fileCollection.parallelStream()
         .map(checksumForFile)
-        .collect(Collectors.toList());
+        .collect(toList());
   
-      long readBytesTotal = checkSumResults.stream().mapToLong(s -> s.getReadBytes()).sum();
-      
       checkSumResults.stream().forEach(item -> {
         System.out.print(Convert.toHex(item.getDigest()));
         System.out.print(formatting(item.getReadBytes()));
         System.out.println(" " + item.getFileName());
       });
-      
+  
       Map<ByteArrayWrapper, List<ChecksumForFileResult>> collect = checkSumResults.stream()
-        .collect(Collectors.groupingBy(s -> s.getDigest()))
+        .collect(groupingBy(ChecksumForFileResult::getDigest))
         .entrySet()
         .stream()
         .filter(s -> s.getValue().size() > 1)
-        .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue()));
-      
+        .collect(toMap(k -> k.getKey(), v -> v.getValue()));
+  
       System.out.println("Number of duplicates:" + collect.size());
-      
+  
       for (Map.Entry<ByteArrayWrapper, List<ChecksumForFileResult>> element : collect.entrySet()) {
         System.out.println("CheckSum: " + Convert.toHex(element.getKey()));
-        
         for (ChecksumForFileResult item : element.getValue()) {
           System.out.print("  " + item.getFileName() + " (");
           System.out.println(formatting(item.getReadBytes()));
         }
       }
+
+      long readBytesTotal = checkSumResults.stream().mapToLong(ChecksumForFileResult::getReadBytes).sum();
       System.out.println("readBytesTotal = " + formatting(readBytesTotal));
     } catch (IOException e) {
       e.printStackTrace();
