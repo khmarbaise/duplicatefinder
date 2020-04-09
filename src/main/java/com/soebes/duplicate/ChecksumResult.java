@@ -1,8 +1,8 @@
 package com.soebes.duplicate;
 
 public class ChecksumResult {
-  private byte[] digest;
-  private Long readBytes;
+  private final byte[] digest;
+  private final Long readBytes;
   
   public ChecksumResult(byte[] digest, Long readBytes) {
     this.digest = digest;

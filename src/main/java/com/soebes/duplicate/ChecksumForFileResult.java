@@ -1,9 +1,9 @@
 package com.soebes.duplicate;
 
 public class ChecksumForFileResult {
-  private ByteArrayWrapper digest;
-  private String fileName;
-  private Long readBytes;
+  private final ByteArrayWrapper digest;
+  private final String fileName;
+  private final Long readBytes;
   
   public ChecksumForFileResult(byte[] digest, String fileName, Long readBytes) {
     this.digest = new ByteArrayWrapper(digest);
