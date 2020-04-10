@@ -15,8 +15,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class Duplicatefinder {
   
-  private static final Function<Path, ChecksumForFileResult> checksumForFile =
-    p -> new CheckSum().forFile(p);
+  private static final Function<Path, ChecksumForFileResult> checksumForFile = CheckSum::forFile;
   
   private static String formatting(Long readBytes) {
     StringBuilder sb = new StringBuilder();

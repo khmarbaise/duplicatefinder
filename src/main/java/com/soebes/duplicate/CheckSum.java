@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class CheckSum {
   
-  public ChecksumForFileResult forFile(Path path) {
+  public static ChecksumForFileResult forFile(Path path) {
     try {
       ChecksumResult checksumResult = new CalcuateChecksum().forFile(path.toFile());
       return new ChecksumForFileResult(checksumResult.getDigest(), path.getFileName()
