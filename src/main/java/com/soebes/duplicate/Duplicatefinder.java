@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -38,22 +39,23 @@ public class Duplicatefinder {
         .map(checksumForFile)
         .collect(toList());
   
+      System.out.println("Total of found files:: " + checkSumResults.size());
       checkSumResults.stream().forEach(item -> {
         System.out.print(Convert.toHex(item.getDigest()));
         System.out.print(formatting(item.getReadBytes()));
         System.out.println(" " + item.getFileName());
       });
   
-      Map<ByteArrayWrapper, List<ChecksumForFileResult>> collect = checkSumResults.stream()
+      Map<ByteArrayWrapper, List<ChecksumForFileResult>> duplicateFiles = checkSumResults.stream()
         .collect(groupingBy(ChecksumForFileResult::getDigest))
         .entrySet()
         .stream()
         .filter(s -> s.getValue().size() > 1)
-        .collect(toMap(k -> k.getKey(), v -> v.getValue()));
+        .collect(toMap(Entry::getKey, Entry::getValue));
   
-      System.out.println("Number of duplicates:" + collect.size());
+      System.out.println("Number of duplicates:" + duplicateFiles.size());
   
-      for (Map.Entry<ByteArrayWrapper, List<ChecksumForFileResult>> element : collect.entrySet()) {
+      for (Entry<ByteArrayWrapper, List<ChecksumForFileResult>> element : duplicateFiles.entrySet()) {
         System.out.println("CheckSum: " + Convert.toHex(element.getKey()));
         for (ChecksumForFileResult item : element.getValue()) {
           System.out.print("  " + item.getFileName() + " (");
