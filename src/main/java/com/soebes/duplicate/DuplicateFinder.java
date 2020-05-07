@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-public class Duplicatefinder {
+public class DuplicateFinder {
   
   private static final Function<Path, ChecksumForFileResult> checksumForFile = CheckSum::forFile;
   
