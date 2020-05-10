@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
@@ -31,11 +29,11 @@ public class DuplicateFinder {
     
     try {
       
-      List<Path> fileCollection = Files.list(Paths.get(args[0]))
+      var fileCollection = Files.list(Paths.get(args[0]))
         .filter(Files::isRegularFile)
         .collect(toList());
       
-      List<ChecksumForFileResult> checkSumResults = fileCollection.parallelStream()
+      var checkSumResults = fileCollection.parallelStream()
         .map(checksumForFile)
         .collect(toList());
   
@@ -46,7 +44,7 @@ public class DuplicateFinder {
         System.out.println(" " + item.getFileName());
       });
   
-      Map<ByteArrayWrapper, List<ChecksumForFileResult>> duplicateFiles = checkSumResults.stream()
+      var duplicateFiles = checkSumResults.stream()
         .collect(groupingBy(ChecksumForFileResult::getDigest))
         .entrySet()
         .stream()
@@ -55,15 +53,15 @@ public class DuplicateFinder {
   
       System.out.println("Number of duplicates:" + duplicateFiles.size());
   
-      for (Entry<ByteArrayWrapper, List<ChecksumForFileResult>> element : duplicateFiles.entrySet()) {
+      for (var element : duplicateFiles.entrySet()) {
         System.out.println("CheckSum: " + Convert.toHex(element.getKey()));
-        for (ChecksumForFileResult item : element.getValue()) {
+        for (var item : element.getValue()) {
           System.out.print("  " + item.getFileName() + " (");
           System.out.println(formatting(item.getReadBytes()));
         }
       }
 
-      long readBytesTotal = checkSumResults.stream().mapToLong(ChecksumForFileResult::getReadBytes).sum();
+      var readBytesTotal = checkSumResults.stream().mapToLong(ChecksumForFileResult::getReadBytes).sum();
       System.out.println("readBytesTotal = " + formatting(readBytesTotal));
     } catch (IOException e) {
       e.printStackTrace();
