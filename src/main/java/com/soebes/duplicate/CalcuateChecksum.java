@@ -11,7 +11,7 @@ public class CalcuateChecksum {
   
   private static final int BUFFER_SIZE = 64 * 1024;
   
-  private MessageDigest messageDigest;
+  private final MessageDigest messageDigest;
   
   public CalcuateChecksum() throws NoSuchAlgorithmException {
     this.messageDigest = MessageDigest.getInstance("SHA-512");
