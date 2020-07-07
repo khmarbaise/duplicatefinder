@@ -8,9 +8,7 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class DuplicateFinder {
   
@@ -28,17 +26,17 @@ public class DuplicateFinder {
   public static void main(String[] args) {
     
     try {
-      
+
       var fileCollection = Files.list(Paths.get(args[0]))
         .filter(Files::isRegularFile)
         .collect(toList());
-      
+
       var checkSumResults = fileCollection.parallelStream()
         .map(checksumForFile)
         .collect(toList());
   
       System.out.println("Total of found files:: " + checkSumResults.size());
-      checkSumResults.stream().forEach(item -> {
+      checkSumResults.forEach(item -> {
         System.out.print(Convert.toHex(item.getDigest()));
         System.out.print(formatting(item.getReadBytes()));
         System.out.println(" " + item.getFileName());
