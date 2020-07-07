@@ -2,15 +2,15 @@ package com.soebes.duplicate;
 
 import java.util.Arrays;
 
-public class ByteArrayWrapper {
+class ByteArrayWrapper {
   
   private final byte[] byteArray;
   
-  public ByteArrayWrapper(byte[] byteArray) {
+  ByteArrayWrapper(byte[] byteArray) {
     this.byteArray = byteArray;
   }
   
-  public byte[] getByteArray() {
+  byte[] getByteArray() {
     return byteArray;
   }
   

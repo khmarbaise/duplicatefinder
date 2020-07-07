@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 
-public class CheckSum {
+class CheckSum {
   
-  public static ChecksumForFileResult forFile(Path path) {
+  static ChecksumForFileResult forFile(Path path) {
     try {
       ChecksumResult checksumResult = new CalcuateChecksum().forFile(path.toFile());
       return new ChecksumForFileResult(checksumResult.getDigest(), path.getFileName()

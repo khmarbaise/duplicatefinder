@@ -1,25 +1,25 @@
 package com.soebes.duplicate;
 
-public class ChecksumForFileResult {
+class ChecksumForFileResult {
   private final ByteArrayWrapper digest;
   private final String fileName;
   private final Long readBytes;
   
-  public ChecksumForFileResult(byte[] digest, String fileName, Long readBytes) {
+  ChecksumForFileResult(byte[] digest, String fileName, Long readBytes) {
     this.digest = new ByteArrayWrapper(digest);
     this.fileName = fileName;
     this.readBytes = readBytes;
   }
   
-  public ByteArrayWrapper getDigest() {
+  ByteArrayWrapper getDigest() {
     return digest;
   }
   
-  public String getFileName() {
+  String getFileName() {
     return fileName;
   }
   
-  public Long getReadBytes() {
+  Long getReadBytes() {
     return readBytes;
   }
 }
