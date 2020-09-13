@@ -21,7 +21,6 @@ final class CalcuateChecksum {
         try (FileInputStream fis = new FileInputStream(file)) {
             return forFile(fis);
         }
-
     }
 
     ChecksumResult forFile(InputStream inputStream) throws IOException {
