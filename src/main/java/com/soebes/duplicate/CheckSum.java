@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 
-class CheckSum {
+final class CheckSum {
   
   static ChecksumForFileResult forFile(Path path) {
     try {

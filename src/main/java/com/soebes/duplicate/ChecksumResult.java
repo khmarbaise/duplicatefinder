@@ -1,6 +1,6 @@
 package com.soebes.duplicate;
 
-class ChecksumResult {
+final class ChecksumResult {
   private final byte[] digest;
   private final Long readBytes;
   

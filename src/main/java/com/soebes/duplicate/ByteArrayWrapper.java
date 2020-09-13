@@ -2,7 +2,7 @@ package com.soebes.duplicate;
 
 import java.util.Arrays;
 
-class ByteArrayWrapper {
+final class ByteArrayWrapper {
   
   private final byte[] byteArray;
   
