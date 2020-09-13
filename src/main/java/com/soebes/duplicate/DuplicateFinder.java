@@ -8,9 +8,11 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-public class DuplicateFinder {
+class DuplicateFinder {
   
   private static final Function<Path, ChecksumForFileResult> checksumForFile = CheckSum::forFile;
   
