@@ -3,17 +3,17 @@ package com.soebes.duplicate;
 import java.util.Arrays;
 
 final class ByteArrayWrapper {
-  
+
   private final byte[] byteArray;
-  
+
   ByteArrayWrapper(byte[] byteArray) {
     this.byteArray = byteArray;
   }
-  
+
   byte[] getByteArray() {
     return byteArray;
   }
-  
+
   @Override
   public final boolean equals(Object o) {
     if (this == o) {
@@ -25,7 +25,7 @@ final class ByteArrayWrapper {
     ByteArrayWrapper that = (ByteArrayWrapper) o;
     return Arrays.equals(byteArray, that.byteArray);
   }
-  
+
   @Override
   public final int hashCode() {
     return Arrays.hashCode(byteArray);
