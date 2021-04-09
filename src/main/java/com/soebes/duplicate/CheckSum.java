@@ -6,6 +6,10 @@ import java.security.NoSuchAlgorithmException;
 
 final class CheckSum {
 
+  private CheckSum() {
+    // intentionally empty.
+  }
+
   static ChecksumForFileResult forFile(Path path) {
     try {
       ChecksumResult checksumResult = new CalcuateChecksum().forFile(path.toFile());
@@ -16,5 +20,5 @@ final class CheckSum {
       throw new RuntimeException(e.getClass().getName(), e);
     }
   }
-  
+
 }
