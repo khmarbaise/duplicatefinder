@@ -11,11 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CalculateChecksumTest {
 
-  private CalcuateChecksum calcuateChecksum;
+  private CalculateChecksum calculateChecksum;
 
   @BeforeEach
   void beforeEach() throws NoSuchAlgorithmException {
-    calcuateChecksum = new CalcuateChecksum();
+    calculateChecksum = new CalculateChecksum();
   }
 
   @Test
@@ -23,7 +23,7 @@ class CalculateChecksumTest {
 
     InputStream resourceAsStream = this.getClass().getResourceAsStream("/defined-content.file");
 
-    ChecksumResult checksumResult = calcuateChecksum.forFile(resourceAsStream);
+    ChecksumResult checksumResult = calculateChecksum.forFile(resourceAsStream);
 
     assertThat(checksumResult).satisfies(s -> {
       assertThat(s.getReadBytes()).isEqualTo(15);

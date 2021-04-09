@@ -12,7 +12,7 @@ final class CheckSum {
 
   static ChecksumForFileResult forFile(Path path) {
     try {
-      ChecksumResult checksumResult = new CalcuateChecksum().forFile(path.toFile());
+      ChecksumResult checksumResult = new CalculateChecksum().forFile(path.toFile());
       return new ChecksumForFileResult(checksumResult.getDigest(), path.getFileName()
           .toString(), checksumResult.getReadBytes());
     } catch (IOException | NoSuchAlgorithmException e) {

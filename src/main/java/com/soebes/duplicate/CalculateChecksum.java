@@ -7,13 +7,13 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-final class CalcuateChecksum {
+final class CalculateChecksum {
 
   private static final int BUFFER_SIZE = 64 * 1024;
 
   private final MessageDigest messageDigest;
 
-  CalcuateChecksum() throws NoSuchAlgorithmException {
+  CalculateChecksum() throws NoSuchAlgorithmException {
     this.messageDigest = MessageDigest.getInstance("SHA-512");
   }
 
