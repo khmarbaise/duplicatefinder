@@ -61,8 +61,8 @@ class DuplicateFinder {
         }
       }
 
-      var readBytesTotal = checkSumResults.stream().mapToLong(ChecksumForFileResult::getReadBytes).sum();
-      System.out.println("readBytesTotal = " + formatting(readBytesTotal));
+      var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::getReadBytes).sum();
+      System.out.println("readTotalBytes = " + formatting(readTotalBytes));
     } catch (IOException e) {
       e.printStackTrace();
     }
