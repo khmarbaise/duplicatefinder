@@ -1,37 +1,32 @@
-= Performance Concat
+// Licensed to the Apache Software Foundation (ASF) under one
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements. See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership. The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing,
+//   software distributed under the License is distributed on an
+//   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+//   KIND, either express or implied. See the License for the
+//   specific language governing permissions and limitations
+//   under the License.
+//
+= Duplicate Finder
 
-This project is inteded to measure the
-performance differences between the following
-two code parts:
+The idea is to identify image files based on there SHA-512 and printout the duplication which have been found.
+Callable from plain command line.
 
-Try to measure the difference between the following:
+== State
 
-[source,java]
-.Benachmark.java
-----
-return content.getFancyStuffs().stream().flatMap(item -> {
-  ArrayList<Element> objects = new ArrayList<>();
-  objects.add(item.getElement());
-  objects.addAll(item.getElements());
-  return objects.stream();
-}).collect(Collectors.toList());
-----
+It's just a Proof Of Concept
 
-and:
+== Requirements
 
-[source,java]
-.filename.java
-----
-return content.getFancyStuffs()
-  .stream()
-  .flatMap(fs -> Stream.concat(Stream.of(fs.getElement()), fs.getElements().stream()))
-  .collect(Collectors.toList());
-----
-
-
-
+JDK11+
 
 
-Visualize the results:
-
-https://jmh.morethan.io/
