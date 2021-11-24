@@ -18,7 +18,7 @@ final class CalculateChecksum {
   }
 
   ChecksumResult forFile(File file) throws IOException {
-    try (FileInputStream fis = new FileInputStream(file)) {
+    try (var fis = new FileInputStream(file)) {
       return forFile(fis);
     }
   }
