@@ -29,13 +29,13 @@ class DuplicateFinder {
 
       System.out.println("Total of found files:: " + checkSumResults.size());
       checkSumResults.forEach(item -> {
-        System.out.print(Convert.toHex(item.getDigest()));
-        System.out.print(formatting(item.getReadBytes()));
-        System.out.println(" " + item.getFileName());
+        System.out.print(Convert.toHex(item.digest()));
+        System.out.print(formatting(item.readBytes()));
+        System.out.println(" " + item.fileName());
       });
 
       var duplicateFiles = checkSumResults.stream()
-          .collect(groupingBy(ChecksumForFileResult::getDigest))
+          .collect(groupingBy(ChecksumForFileResult::digest))
           .entrySet()
           .stream()
           .filter(s -> s.getValue().size() > 1)
@@ -46,12 +46,12 @@ class DuplicateFinder {
       for (var element : duplicateFiles.entrySet()) {
         System.out.println("CheckSum: " + Convert.toHex(element.getKey()));
         for (var item : element.getValue()) {
-          System.out.print("  " + item.getFileName() + " (");
-          System.out.println(formatting(item.getReadBytes()));
+          System.out.print("  " + item.fileName() + " (");
+          System.out.println(formatting(item.readBytes()));
         }
       }
 
-      var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::getReadBytes).sum();
+      var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
       System.out.println("readTotalBytes = " + formatting(readTotalBytes));
     } catch (IOException e) {
       e.printStackTrace();
