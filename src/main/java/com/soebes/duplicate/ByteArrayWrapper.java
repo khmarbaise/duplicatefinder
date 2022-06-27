@@ -2,20 +2,10 @@ package com.soebes.duplicate;
 
 import java.util.Arrays;
 
-final class ByteArrayWrapper {
-
-  private final byte[] byteArray;
-
-  ByteArrayWrapper(byte[] byteArray) {
-    this.byteArray = byteArray;
-  }
-
-  byte[] getByteArray() {
-    return byteArray;
-  }
+record ByteArrayWrapper(byte[] byteArray) {
 
   @Override
-  public final boolean equals(Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -27,7 +17,7 @@ final class ByteArrayWrapper {
   }
 
   @Override
-  public final int hashCode() {
+  public int hashCode() {
     return Arrays.hashCode(byteArray);
   }
 }

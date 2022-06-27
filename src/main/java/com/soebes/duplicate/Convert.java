@@ -14,8 +14,8 @@ final class Convert {
   }
 
   static String toHex(ByteArrayWrapper mdbytes) {
-    StringBuilder sb = new StringBuilder(mdbytes.getByteArray().length * 2);
-    for (byte mdbyte : mdbytes.getByteArray()) {
+    StringBuilder sb = new StringBuilder(mdbytes.byteArray().length * 2);
+    for (byte mdbyte : mdbytes.byteArray()) {
       sb.append(String.format("%02X", mdbyte));
     }
     return sb.toString();
