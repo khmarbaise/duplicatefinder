@@ -1,9 +1,6 @@
 package com.soebes.duplicate;
 
-final class Convert {
-  private Convert() {
-    // intentionally empty.
-  }
+record Convert() {
 
   static String toHex(byte[] mdbytes) {
     StringBuilder sb = new StringBuilder(mdbytes.length * 2);

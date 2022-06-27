@@ -26,8 +26,8 @@ class CalculateChecksumTest {
     ChecksumResult checksumResult = calculateChecksum.forFile(resourceAsStream);
 
     assertThat(checksumResult).satisfies(s -> {
-      assertThat(s.getReadBytes()).isEqualTo(15);
-      assertThat(s.getDigest()).containsExactly( //
+      assertThat(s.readBytes()).isEqualTo(15);
+      assertThat(s.digest()).containsExactly( //
           0xDD, 0xA1, 0x11, 0xAF, 0xE0, 0xB2, 0x27, 0x1C, //
           0xBA, 0xAA, 0x94, 0x0F, 0xA1, 0xA6, 0xB2, 0x27, //
           0xAD, 0x47, 0x98, 0x78, 0xDB, 0x7B, 0x13, 0x94, //
