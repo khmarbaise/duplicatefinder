@@ -1,23 +1,22 @@
 package com.soebes.duplicate;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 record ByteArrayWrapper(byte[] byteArray) {
 
+  ByteArrayWrapper(byte[] byteArray) {
+    this.byteArray = byteArray.clone();
+  }
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof ByteArrayWrapper)) {
-      return false;
-    }
-    ByteArrayWrapper that = (ByteArrayWrapper) o;
-    return Arrays.equals(byteArray, that.byteArray);
+    return o instanceof ByteArrayWrapper byteArrayWrapper
+        && Arrays.equals(byteArrayWrapper.byteArray, byteArray);
   }
 
   @Override
   public int hashCode() {
-    return Arrays.hashCode(byteArray);
+    return Objects.hash(Arrays.hashCode(byteArray));
   }
 }
