@@ -27,6 +27,6 @@ It's just a Proof Of Concept
 
 == Requirements
 
-JDK11+
+JDK17+
 
 
