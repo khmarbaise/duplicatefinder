@@ -12,8 +12,7 @@ record ByteArrayWrapper(byte[] byteArray) {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof ByteArrayWrapper)) return false;
-    ByteArrayWrapper that = (ByteArrayWrapper) o;
+    if (!(o instanceof ByteArrayWrapper that)) return false;
     return Arrays.equals(byteArray, that.byteArray);
   }
 
