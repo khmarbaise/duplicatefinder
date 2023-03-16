@@ -55,13 +55,13 @@ class DuplicateFinder {
 
         out.println("Number of duplicates:" + duplicateFiles.size());
 
-        for (var element : duplicateFiles.entrySet()) {
-          out.println("CheckSum: " + Convert.toHex(element.getKey()));
-          for (var item : element.getValue()) {
+        duplicateFiles.forEach((key, value) -> {
+          out.println("CheckSum: " + Convert.toHex(key));
+          for (var item : value) {
             out.print("  " + item.fileName() + " (");
             out.println(formatting(item.readBytes()));
           }
-        }
+        });
 
         var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
         out.println("readTotalBytes = " + formatting(readTotalBytes));
