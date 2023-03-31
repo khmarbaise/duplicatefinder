@@ -30,45 +30,38 @@ class DuplicateFinder {
     return " (" + String.format(Locale.GERMANY, "%,d", readBytes) + " bytes.)";
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
+    try (var list = Files.list(Paths.get(args[0]))) {
+      var fileCollection = list.filter(Files::isRegularFile).toList();
 
-    try {
+      var checkSumResults = fileCollection.parallelStream().map(forFile).toList();
 
-      try (var list = Files.list(Paths.get(args[0]))) {
-        var fileCollection = list.filter(Files::isRegularFile).toList();
+      out.println("Total of found files:: " + checkSumResults.size());
+      checkSumResults.forEach(item -> {
+        out.print(Convert.toHex(item.digest()));
+        out.print(formatting(item.readBytes()));
+        out.println(" " + item.fileName());
+      });
 
-        var checkSumResults = fileCollection.parallelStream().map(forFile).toList();
+      var duplicateFiles = checkSumResults.stream()
+          .collect(groupingBy(ChecksumForFileResult::digest))
+          .entrySet()
+          .stream()
+          .filter(s -> s.getValue().size() > 1)
+          .collect(toMap(Entry::getKey, Entry::getValue));
 
-        out.println("Total of found files:: " + checkSumResults.size());
-        checkSumResults.forEach(item -> {
-          out.print(Convert.toHex(item.digest()));
-          out.print(formatting(item.readBytes()));
-          out.println(" " + item.fileName());
-        });
+      out.println("Number of duplicates:" + duplicateFiles.size());
 
-        var duplicateFiles = checkSumResults.stream()
-            .collect(groupingBy(ChecksumForFileResult::digest))
-            .entrySet()
-            .stream()
-            .filter(s -> s.getValue().size() > 1)
-            .collect(toMap(Entry::getKey, Entry::getValue));
+      duplicateFiles.forEach((key, value) -> {
+        out.println("CheckSum: " + Convert.toHex(key));
+        for (var item : value) {
+          out.print("  " + item.fileName() + " (");
+          out.println(formatting(item.readBytes()));
+        }
+      });
 
-        out.println("Number of duplicates:" + duplicateFiles.size());
-
-        duplicateFiles.forEach((key, value) -> {
-          out.println("CheckSum: " + Convert.toHex(key));
-          for (var item : value) {
-            out.print("  " + item.fileName() + " (");
-            out.println(formatting(item.readBytes()));
-          }
-        });
-
-        var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
-        out.println("readTotalBytes = " + formatting(readTotalBytes));
-
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
+      var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
+      out.println("readTotalBytes = " + formatting(readTotalBytes));
     }
   }
 }
