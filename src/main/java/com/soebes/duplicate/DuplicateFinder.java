@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -38,7 +39,7 @@ class DuplicateFinder {
 
       out.println("Total of found files:: " + checkSumResults.size());
       checkSumResults.forEach(item -> {
-        out.print(Convert.toHex(item.digest()));
+        out.print(HexFormat.of().formatHex(item.digest().byteArray()).toUpperCase());
         out.print(formatting(item.readBytes()));
         out.println(" " + item.fileName());
       });
@@ -53,7 +54,7 @@ class DuplicateFinder {
       out.println("Number of duplicates:" + duplicateFiles.size());
 
       duplicateFiles.forEach((key, value) -> {
-        out.println("CheckSum: " + Convert.toHex(key));
+        out.println("CheckSum: " + HexFormat.of().formatHex(key.byteArray()).toUpperCase());
         for (var item : value) {
           out.print("  " + item.fileName() + " (");
           out.println(formatting(item.readBytes()));
