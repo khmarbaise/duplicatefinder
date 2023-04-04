@@ -38,12 +38,6 @@ class DuplicateFinder {
       var checkSumResults = fileCollection.parallelStream().map(forFile).toList();
 
       out.println("Total of found files:: " + checkSumResults.size());
-      checkSumResults.forEach(item -> {
-        out.print(HexFormat.of().formatHex(item.digest().byteArray()).toUpperCase());
-        out.print(formatting(item.readBytes()));
-        out.println(" " + item.fileName());
-      });
-
       var duplicateFiles = checkSumResults.stream()
           .collect(groupingBy(ChecksumForFileResult::digest))
           .entrySet()
