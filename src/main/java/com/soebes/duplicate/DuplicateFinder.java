@@ -55,8 +55,8 @@ class DuplicateFinder {
         }
       });
 
-      var readTotalBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
-      out.println("readTotalBytes = " + formatting(readTotalBytes));
+      var totalNumberOfReadBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
+      out.println("totalNumberOfReadBytes = " + formatting(totalNumberOfReadBytes));
     }
   }
 }
