@@ -27,7 +27,7 @@ final class CalculateChecksum {
     byte[] dataBytes = new byte[BUFFER_SIZE];
 
     long readBytes = 0L;
-    int nread = 0;
+    int nread;
     while ((nread = inputStream.read(dataBytes)) != -1) {
       messageDigest.update(dataBytes, 0, nread);
       readBytes += nread;
