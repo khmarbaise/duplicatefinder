@@ -22,7 +22,7 @@ class DuplicateFinder {
   static Function<Path, ChecksumForFileResult> forFile = path -> {
     try {
       ChecksumResult checksumResult = new CalculateChecksum().forFile(path.toFile());
-      return new ChecksumForFileResult(checksumResult.digest(), path.getFileName()
+      return new ChecksumForFileResult(checksumResult.digest(), path
           .toString(), checksumResult.readBytes());
     } catch (IOException | NoSuchAlgorithmException e) {
       //Translate to RuntimeException.
