@@ -26,7 +26,7 @@ final class CalculateChecksum {
   ChecksumResult forFile(InputStream inputStream) throws IOException {
     var dataBytes = new byte[BUFFER_SIZE];
 
-    long readBytes = 0L;
+    var readBytes = 0L;
     int nread;
     while ((nread = inputStream.read(dataBytes)) != -1) {
       messageDigest.update(dataBytes, 0, nread);
