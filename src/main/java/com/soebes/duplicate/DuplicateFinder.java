@@ -61,7 +61,7 @@ class DuplicateFinder {
     duplicateFiles.forEach((key, value) -> {
       out.println("CheckSum: " + HexFormat.of().formatHex(key.byteArray()).toUpperCase());
       for (var item : value) {
-        out.print("  " + item + " (");
+        out.print("  " + item.fileName() + " (");
         out.println(formatting(item.readBytes()));
       }
     });
