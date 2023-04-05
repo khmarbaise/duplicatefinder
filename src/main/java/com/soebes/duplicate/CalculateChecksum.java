@@ -1,9 +1,9 @@
 package com.soebes.duplicate;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -17,8 +17,8 @@ final class CalculateChecksum {
     this.messageDigest = MessageDigest.getInstance("SHA-512");
   }
 
-  ChecksumResult forFile(File file) throws IOException {
-    try (var fis = new FileInputStream(file)) {
+  ChecksumResult forFile(Path file) throws IOException {
+    try (var fis = new FileInputStream(file.toFile())) {
       return forFile(fis);
     }
   }

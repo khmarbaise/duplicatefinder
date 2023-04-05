@@ -21,7 +21,7 @@ class DuplicateFinder {
 
   static Function<Path, ChecksumForFileResult> toChecksumForFile = path -> {
     try {
-      var checksumResult = new CalculateChecksum().forFile(path.toFile());
+      var checksumResult = new CalculateChecksum().forFile(path);
       return new ChecksumForFileResult(checksumResult.digest(), path
           .toString(), checksumResult.readBytes());
     } catch (IOException | NoSuchAlgorithmException e) {
