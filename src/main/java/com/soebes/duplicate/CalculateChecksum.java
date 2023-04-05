@@ -1,8 +1,8 @@
 package com.soebes.duplicate;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,7 +18,7 @@ final class CalculateChecksum {
   }
 
   ChecksumResult forFile(Path file) throws IOException {
-    try (var fis = new FileInputStream(file.toFile())) {
+    try (var fis = Files.newInputStream(file)) {
       return forFile(fis);
     }
   }
