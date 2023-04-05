@@ -39,7 +39,7 @@ class DuplicateFinder {
   private static final Predicate<Path> IS_VALID_FILE = IS_REGULAR_FILE.and(IS_READABLE);
 
   private static List<Path> selectAllFiles(Path start) throws IOException {
-    try (Stream<Path> pathStream = Files.walk(start)) {
+    try (var pathStream = Files.walk(start)) {
       return pathStream.filter(IS_VALID_FILE).toList();
     }
   }
