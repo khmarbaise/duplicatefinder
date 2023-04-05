@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -57,15 +58,17 @@ class DuplicateFinder {
 
     out.println("Number of duplicates:" + duplicateFiles.size());
 
-    duplicateFiles.forEach((key, value) -> {
-      out.println("CheckSum: " + HexFormat.of().withUpperCase().formatHex(key.byteArray()));
-      for (var item : value) {
-        out.print("  " + item.fileName() + " (");
-        out.println(formatting(item.readBytes()));
+    var reducibleSize = duplicateFiles.entrySet().stream().map(item -> {
+      out.println("CheckSum: " + HexFormat.of().withUpperCase().formatHex(item.getKey().byteArray()));
+      for (var entry : item.getValue()) {
+        out.print("  " + entry.fileName());
+        out.println(formatting(entry.readBytes()));
       }
-    });
+      return item.getValue().get(0).readBytes();
+    }).reduce(0L, Long::sum);
 
     var totalNumberOfReadBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
     out.println("totalNumberOfReadBytes = " + formatting(totalNumberOfReadBytes));
+    out.println("reducibleSize = " + formatting(reducibleSize));
   }
 }
