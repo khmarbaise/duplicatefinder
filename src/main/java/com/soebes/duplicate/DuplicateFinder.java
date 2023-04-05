@@ -19,9 +19,9 @@ import static java.util.stream.Collectors.toMap;
 
 class DuplicateFinder {
 
-  static Function<Path, ChecksumForFileResult> forFile = path -> {
+  static Function<Path, ChecksumForFileResult> toChecksumForFile = path -> {
     try {
-      ChecksumResult checksumResult = new CalculateChecksum().forFile(path.toFile());
+      var checksumResult = new CalculateChecksum().forFile(path.toFile());
       return new ChecksumForFileResult(checksumResult.digest(), path
           .toString(), checksumResult.readBytes());
     } catch (IOException | NoSuchAlgorithmException e) {
@@ -46,7 +46,7 @@ class DuplicateFinder {
 
   public static void main(String[] args) throws IOException {
     var imageFiles = selectAllFiles(Paths.get(args[0]));
-    var checkSumResults = imageFiles.parallelStream().map(forFile).toList();
+    var checkSumResults = imageFiles.parallelStream().map(toChecksumForFile).toList();
 
     out.println("Total of found files:: " + checkSumResults.size());
     var duplicateFiles = checkSumResults.stream()
