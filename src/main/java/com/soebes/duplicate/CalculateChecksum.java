@@ -24,7 +24,7 @@ final class CalculateChecksum {
   }
 
   ChecksumResult forFile(InputStream inputStream) throws IOException {
-    byte[] dataBytes = new byte[BUFFER_SIZE];
+    var dataBytes = new byte[BUFFER_SIZE];
 
     long readBytes = 0L;
     int nread;
