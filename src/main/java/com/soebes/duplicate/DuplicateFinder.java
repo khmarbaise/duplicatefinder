@@ -52,7 +52,7 @@ class DuplicateFinder {
         .collect(groupingBy(ChecksumForFileResult::digest))
         .entrySet()
         .stream()
-        .filter(s -> s.getValue().size() > 1)
+        .filter(HAS_DUPLICATE)
         .collect(toMap(Entry::getKey, Entry::getValue));
 
     out.println("Number of duplicates:" + duplicateFiles.size());
@@ -70,4 +70,7 @@ class DuplicateFinder {
     out.println("totalNumberOfReadBytes = " + formatting(totalNumberOfReadBytes));
     out.println("reducibleSize = " + formatting(reducibleSize));
   }
+
+  private static final Predicate<Entry<ByteArrayWrapper, List<ChecksumForFileResult>>> HAS_DUPLICATE = s -> s.getValue().size() > 1;
+
 }
