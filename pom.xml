@@ -17,14 +17,14 @@
   <name>Duplicate Findern</name>
 
   <properties>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
   </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.9.2</version>
+        <version>5.9.3</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
