@@ -45,10 +45,14 @@ class DuplicateFinder {
 
   public static void main(String[] args) throws IOException {
     var imageFiles = selectAllFiles(Paths.get(args[0]));
-    var checkSumResults = imageFiles.parallelStream().map(toChecksumForFile).toList();
+    var checkSumResults = imageFiles
+        .parallelStream()
+        .map(toChecksumForFile)
+        .toList();
 
     out.println("Total of found files:: " + checkSumResults.size());
-    var duplicateFiles = checkSumResults.stream()
+    var duplicateFiles = checkSumResults
+        .stream()
         .collect(groupingBy(ChecksumForFileResult::digest))
         .entrySet()
         .stream()
@@ -57,7 +61,10 @@ class DuplicateFinder {
 
     out.println("Number of duplicates:" + duplicateFiles.size());
 
-    var reducibleSize = duplicateFiles.entrySet().stream().map(item -> {
+    var reducibleSize = duplicateFiles
+        .entrySet()
+        .stream()
+        .map(item -> {
       out.println("CheckSum: " + HexFormat.of().withUpperCase().formatHex(item.getKey().byteArray()));
       for (var entry : item.getValue()) {
         out.print("  " + entry.fileName());
