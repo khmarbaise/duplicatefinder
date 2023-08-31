@@ -46,7 +46,7 @@ class DuplicateFinder {
   public static void main(String[] args) throws IOException {
     var imageFiles = selectAllFiles(Paths.get(args[0]));
     var checkSumResults = imageFiles
-        .parallelStream()
+        .stream()
         .map(toChecksumForFile)
         .toList();
 
