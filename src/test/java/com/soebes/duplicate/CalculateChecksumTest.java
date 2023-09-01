@@ -4,7 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,11 +21,8 @@ class CalculateChecksumTest {
 
   @Test
   void defined_content_should_calculate_the_given_result() throws IOException {
-
-    InputStream resourceAsStream = this.getClass().getResourceAsStream("/defined-content.file");
-
-    ChecksumResult checksumResult = calculateChecksum.forFile(resourceAsStream);
-
+    var inputStream = Files.newInputStream(Path.of("src/test/resources/defined-content.file"));
+    var checksumResult = calculateChecksum.forFile(inputStream);
     assertThat(checksumResult).satisfies(s -> {
       assertThat(s.readBytes()).isEqualTo(15);
       assertThat(s.digest()).containsExactly( //
