@@ -27,6 +27,9 @@ It's just a Proof Of Concept
 
 == Requirements
 
-JDK17+
+* JDK17+
 
-
+[source,bash]
+----
+mvn clean verify
+----
