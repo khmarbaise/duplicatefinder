@@ -83,14 +83,14 @@ class DuplicateFinder {
     var reducibleSize = duplicateFiles
         .entrySet()
         .stream()
-        .map(item -> {
+        .mapToLong(item -> {
           out.println("CheckSum: " + HexFormat.of().withUpperCase().formatHex(item.getKey().byteArray()));
           for (var entry : item.getValue()) {
             out.print("  " + entry.fileName());
             out.println(formatting(entry.readBytes()));
           }
           return item.getValue().get(0).readBytes() * (item.getValue().size() - 1);
-        }).reduce(0L, Long::sum);
+        }).sum();
 
     var totalNumberOfReadBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
     out.println("totalNumberOfReadBytes = " + formatting(totalNumberOfReadBytes));
