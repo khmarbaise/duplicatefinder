@@ -33,3 +33,11 @@ It's just a Proof Of Concept
 ----
 mvn clean verify
 ----
+
+== JFR
+
+[source,bash]
+----
+java -Xmx32m -XX:StartFlightRecording:filename=recording.jfr,settings=profile.jfc -jar target/duplicate-finder.jar ~/Bilder
+java -XX:+UseSerialGC -Xmx32m -XX:StartFlightRecording:filename=recording.jfr,settings=profile.jfc -jar target/duplicate-finder.jar ~/Bilder
+----
