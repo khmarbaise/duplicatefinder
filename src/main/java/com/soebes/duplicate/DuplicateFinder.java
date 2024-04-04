@@ -89,7 +89,7 @@ class DuplicateFinder {
             out.print("  " + entry.fileName());
             out.println(formatting(entry.readBytes()));
           }
-          return item.getValue().get(0).readBytes() * (item.getValue().size() - 1);
+          return item.getValue().getFirst().readBytes() * (item.getValue().size() - 1);
         }).sum();
 
     var totalNumberOfReadBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();

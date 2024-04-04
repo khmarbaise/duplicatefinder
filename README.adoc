@@ -27,7 +27,7 @@ It's just a Proof Of Concept
 
 == Requirements
 
-* JDK17+
+* JDK21+
 
 [source,bash]
 ----
