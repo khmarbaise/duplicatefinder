@@ -65,7 +65,7 @@ class DuplicateFinder {
   public static void main(String[] args) throws IOException {
     var imageFiles = selectAllFiles(Paths.get(args[0]));
     var checkSumResults = imageFiles
-        .stream()
+        .parallelStream()
         .map(toChecksumForFile)
         .toList();
 
@@ -84,7 +84,7 @@ class DuplicateFinder {
         .entrySet()
         .stream()
         .mapToLong(item -> {
-          out.println("CheckSum: " + HexFormat.of().withUpperCase().formatHex(item.getKey().byteArray()));
+          out.println("HASH: " + HexFormat.of().withUpperCase().formatHex(item.getKey().byteArray()));
           for (var entry : item.getValue()) {
             out.print("  " + entry.fileName());
             out.println(formatting(entry.readBytes()));
