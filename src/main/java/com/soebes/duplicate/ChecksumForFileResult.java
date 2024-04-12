@@ -19,9 +19,11 @@ package com.soebes.duplicate;
  * under the License.
  */
 
-record ChecksumForFileResult(ByteArrayWrapper digest, String fileName, Long readBytes) {
+import java.nio.file.Path;
 
-  ChecksumForFileResult(byte[] digest, String fileName, Long readBytes) {
+record ChecksumForFileResult(ByteArrayWrapper digest, Path fileName, Long readBytes) {
+
+  ChecksumForFileResult(byte[] digest, Path fileName, Long readBytes) {
     this(new ByteArrayWrapper(digest), fileName, readBytes);
   }
 
