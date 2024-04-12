@@ -40,8 +40,7 @@ class DuplicateFinder {
   static Function<Path, ChecksumForFileResult> toChecksumForFile = path -> {
     try {
       var checksumResult = new CalculateChecksum().forFile(path);
-      return new ChecksumForFileResult(checksumResult.digest(), path
-          .toString(), checksumResult.readBytes());
+      return new ChecksumForFileResult(checksumResult.digest(), path, checksumResult.readBytes());
     } catch (IOException | NoSuchAlgorithmException e) {
       //Translate to RuntimeException.
       throw new RuntimeException(e.getClass().getName(), e);
@@ -63,7 +62,8 @@ class DuplicateFinder {
   }
 
   public static void main(String[] args) throws IOException {
-    var imageFiles = selectAllFiles(Paths.get(args[0]));
+    Path searchPath = Paths.get(args[0]);
+    var imageFiles = selectAllFiles(searchPath);
     var checkSumResults = imageFiles
         .parallelStream()
         .map(toChecksumForFile)
@@ -80,13 +80,14 @@ class DuplicateFinder {
 
     out.println("Number of duplicates:" + duplicateFiles.size());
 
+    out.println("Duplicates within Path: " + searchPath);
     var reducibleSize = duplicateFiles
         .entrySet()
         .stream()
         .mapToLong(item -> {
           out.println("HASH: " + HexFormat.of().withUpperCase().formatHex(item.getKey().byteArray()));
           for (var entry : item.getValue()) {
-            out.print("  " + entry.fileName());
+            out.print("  " + searchPath.relativize(entry.fileName()));
             out.println(formatting(entry.readBytes()));
           }
           return item.getValue().getFirst().readBytes() * (item.getValue().size() - 1);
