@@ -19,6 +19,9 @@ package com.soebes.duplicate;
  * under the License.
  */
 
+import com.soebes.duplicate.CalculateChecksum.Result.Failure;
+import com.soebes.duplicate.CalculateChecksum.Result.Success;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,13 +40,19 @@ import static java.util.stream.Collectors.toMap;
 
 class DuplicateFinder {
 
-  static Function<Path, ChecksumForFileResult> toChecksumForFile = path -> {
+  sealed interface CheckSumResult<V> {
+    record Success<V>(V result) implements CheckSumResult<V> { }
+    record Failure<V>(Throwable cause) implements CheckSumResult<V> { }
+  }
+
+  static Function<Path, CheckSumResult<ChecksumForFileResult>> toChecksumForFile = path -> {
     try {
-      var checksumResult = new CalculateChecksum().forFile(path);
-      return new ChecksumForFileResult(checksumResult.digest(), path, checksumResult.readBytes());
-    } catch (IOException | NoSuchAlgorithmException e) {
-      //Translate to RuntimeException.
-      throw new RuntimeException(e.getClass().getName(), e);
+      return switch (new CalculateChecksum().forFile(path)) {
+        case Failure(Throwable cause) -> new CheckSumResult.Failure<>(new RuntimeException(cause.getClass().getName(), cause));
+        case Success(ChecksumResult success) -> new CheckSumResult.Success<>(new ChecksumForFileResult(success.digest(), path, success.readBytes()));
+      };
+    } catch (NoSuchAlgorithmException e) {
+      return new CheckSumResult.Failure<>(e);
     }
   };
 
@@ -72,6 +81,8 @@ class DuplicateFinder {
     out.println("Total of found files:: " + checkSumResults.size());
     var duplicateFiles = checkSumResults
         .stream()
+        .filter(CheckSumResult.Success.class::isInstance)
+        .map(s -> ((CheckSumResult.Success<ChecksumForFileResult>) s).result())
         .collect(groupingBy(ChecksumForFileResult::digest))
         .entrySet()
         .stream()
@@ -93,9 +104,22 @@ class DuplicateFinder {
           return item.getValue().getFirst().readBytes() * (item.getValue().size() - 1);
         }).sum();
 
-    var totalNumberOfReadBytes = checkSumResults.stream().mapToLong(ChecksumForFileResult::readBytes).sum();
+    var totalNumberOfReadBytes = checkSumResults
+        .stream()
+        .filter(CheckSumResult.Success.class::isInstance)
+        .map(s -> ((CheckSumResult.Success<ChecksumForFileResult>) s).result())
+        .mapToLong(ChecksumForFileResult::readBytes).sum();
     out.println("totalNumberOfReadBytes = " + formatting(totalNumberOfReadBytes));
     out.println("reducibleSize = " + formatting(reducibleSize));
+
+    var errorList = checkSumResults
+        .stream()
+        .filter(CheckSumResult.Failure.class::isInstance)
+        .map(s -> ((CheckSumResult.Failure<ChecksumForFileResult>) s).cause())
+        .toList();
+    if (!errorList.isEmpty()) {
+      out.println("errorList = " + errorList.size());
+    }
   }
 
   static final Predicate<Entry<ByteArrayWrapper, List<ChecksumForFileResult>>> duplicates = s -> s.getValue().size() > 1;

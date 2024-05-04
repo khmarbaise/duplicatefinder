@@ -19,6 +19,9 @@ package com.soebes.duplicate;
  * under the License.
  */
 
+import com.soebes.duplicate.CalculateChecksum.Result.Failure;
+import com.soebes.duplicate.CalculateChecksum.Result.Success;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -36,9 +39,16 @@ final class CalculateChecksum {
     this.messageDigest = MessageDigest.getInstance("SHA-512");
   }
 
-  ChecksumResult forFile(Path file) throws IOException {
+  sealed interface Result<V> {
+    record Success<V>(V result) implements Result<V> { }
+    record Failure<V>(Throwable cause) implements Result<V> { }
+  }
+
+  Result<ChecksumResult> forFile(Path file) {
     try (var fis = Files.newInputStream(file)) {
-      return forFile(fis);
+      return new Success<>(forFile(fis));
+    } catch (IOException e) {
+      return new Failure<>(e);
     }
   }
 
