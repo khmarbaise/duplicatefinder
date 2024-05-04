@@ -30,9 +30,10 @@ record ByteArrayWrapper(byte[] byteArray) {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ByteArrayWrapper that)) return false;
-    return Arrays.equals(byteArray, that.byteArray);
+    if (o instanceof ByteArrayWrapper(var that) ) {
+      return Arrays.equals(byteArray, that);
+    }
+    return false;
   }
 
   @Override
