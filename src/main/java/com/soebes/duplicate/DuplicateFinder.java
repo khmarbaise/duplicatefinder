@@ -118,7 +118,8 @@ class DuplicateFinder {
         .map(s -> ((CheckSumResult.Failure<ChecksumForFileResult>) s).cause())
         .toList();
     if (!errorList.isEmpty()) {
-      out.println("errorList = " + errorList.size());
+      out.println("--------------- ERRORS ------------------------");
+      errorList.forEach(out::println);
     }
   }
 
