@@ -57,7 +57,7 @@ class DuplicateFinder {
   };
 
   private static String formatting(Long readBytes) {
-    return " (" + String.format(Locale.GERMANY, "%,d", readBytes) + " bytes.)";
+    return String.format(Locale.GERMANY, " ( %,d bytes.)", readBytes);
   }
 
   private static final Predicate<Path> IS_REGULAR_FILE = Files::isRegularFile;
