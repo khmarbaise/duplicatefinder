@@ -116,6 +116,7 @@ class DuplicateFinder {
         .stream()
         .filter(CheckSumResult.Failure.class::isInstance)
         .map(s -> ((CheckSumResult.Failure<ChecksumForFileResult>) s).cause())
+        .distinct()
         .toList();
     if (!errorList.isEmpty()) {
       out.println("--------------- ERRORS ------------------------");
