@@ -48,7 +48,7 @@ class DuplicateFinder {
   static Function<Path, CheckSumResult<ChecksumForFileResult>> toChecksumForFile = path -> {
     try {
       return switch (new CalculateChecksum().forFile(path)) {
-        case Failure(Throwable cause) -> new CheckSumResult.Failure<>(new RuntimeException(cause.getClass().getName(), cause));
+        case Failure(Throwable cause) -> new CheckSumResult.Failure<>(cause);
         case Success(ChecksumResult success) -> new CheckSumResult.Success<>(new ChecksumForFileResult(success.digest(), path, success.readBytes()));
       };
     } catch (NoSuchAlgorithmException e) {
