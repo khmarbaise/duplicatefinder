@@ -47,7 +47,7 @@ final class CalculateChecksum {
   Result<ChecksumResult> forFile(Path file) {
     try (var fis = Files.newInputStream(file)) {
       return new Success<>(forFile(fis));
-    } catch (IOException e) {
+    } catch (Exception e) {
       return new Failure<>(e);
     }
   }
