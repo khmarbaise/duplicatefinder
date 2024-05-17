@@ -27,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +65,7 @@ class DuplicateFinder {
   private static final Predicate<Path> IS_READABLE = Files::isReadable;
   private static final Predicate<Path> IS_VALID_FILE = IS_REGULAR_FILE.and(IS_READABLE);
 
-  private static List<Path> selectAllFiles(Path start) throws IOException {
+  private static Collection<Path> selectAllFiles(Path start) throws IOException {
     try (var pathStream = Files.walk(start)) {
       return pathStream.filter(IS_VALID_FILE).toList();
     }
