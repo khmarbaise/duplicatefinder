@@ -46,7 +46,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.10.2</version>
+        <version>5.10.3</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -58,7 +58,7 @@
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-bom</artifactId>
-        <version>3.25.3</version>
+        <version>3.26.3</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
