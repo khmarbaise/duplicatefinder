@@ -40,4 +40,4 @@ jobs:
           cache: 'maven'
       - name: 'Build'
         shell: bash
-        run: mvn -V --no-transfer-progress clean verify --fail-at-end
+        run: mvn -V --color always --no-transfer-progress clean verify --fail-at-end
