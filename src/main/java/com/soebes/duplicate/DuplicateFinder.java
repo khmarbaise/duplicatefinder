@@ -19,9 +19,6 @@ package com.soebes.duplicate;
  * under the License.
  */
 
-import com.soebes.duplicate.CalculateChecksum.Result.Failure;
-import com.soebes.duplicate.CalculateChecksum.Result.Success;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,6 +31,9 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import com.soebes.duplicate.CalculateChecksum.Result.Failure;
+import com.soebes.duplicate.CalculateChecksum.Result.Success;
 
 import static java.lang.System.out;
 import static java.util.stream.Collectors.groupingBy;
@@ -71,7 +71,7 @@ class DuplicateFinder {
     }
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main(String[] args) throws IOException {
     Path searchPath = Paths.get(args[0]);
     var imageFiles = selectAllFiles(searchPath);
     var checkSumResults = imageFiles
