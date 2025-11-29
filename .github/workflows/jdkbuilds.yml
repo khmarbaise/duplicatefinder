@@ -38,6 +38,12 @@ jobs:
           distribution: "temurin"
           java-version: 25
           cache: 'maven'
+      - name: 'Setup Maven 3.9.11'
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.11
       - name: 'Build'
         shell: bash
-        run: mvn -V --color always --no-transfer-progress clean verify --fail-at-end
+        env:
+          MAVEN_OPTS: --sun-misc-unsafe-memory-access=allow
+        run: mvn -V --no-transfer-progress --color always verify --fail-at-end
