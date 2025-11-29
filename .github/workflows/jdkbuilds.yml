@@ -28,7 +28,7 @@ on:
 
 jobs:
   openjdk:
-    name: "JDK 23"
+    name: "JDK 25"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
