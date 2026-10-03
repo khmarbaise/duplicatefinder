@@ -19,8 +19,8 @@ package com.soebes.duplicate;
  * under the License.
  */
 
-import com.soebes.duplicate.CalculateChecksum.Result.Failure;
-import com.soebes.duplicate.CalculateChecksum.Result.Success;
+import com.soebes.duplicate.CalculateHash.Result.Failure;
+import com.soebes.duplicate.CalculateHash.Result.Success;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,13 +29,13 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-final class CalculateChecksum {
+final class CalculateHash {
 
   private static final int BUFFER_SIZE = 64 * 1024;
 
   private final MessageDigest messageDigest;
 
-  CalculateChecksum() throws NoSuchAlgorithmException {
+  CalculateHash() throws NoSuchAlgorithmException {
     this.messageDigest = MessageDigest.getInstance("SHA-512");
   }
 

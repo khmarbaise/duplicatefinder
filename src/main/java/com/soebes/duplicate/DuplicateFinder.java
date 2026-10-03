@@ -32,8 +32,8 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import com.soebes.duplicate.CalculateChecksum.Result.Failure;
-import com.soebes.duplicate.CalculateChecksum.Result.Success;
+import com.soebes.duplicate.CalculateHash.Result.Failure;
+import com.soebes.duplicate.CalculateHash.Result.Success;
 
 import static java.lang.System.out;
 import static java.util.stream.Collectors.groupingBy;
@@ -48,7 +48,7 @@ class DuplicateFinder {
 
   static Function<Path, CheckSumResult<ChecksumForFileResult>> toChecksumForFile = path -> {
     try {
-      return switch (new CalculateChecksum().forFile(path)) {
+      return switch (new CalculateHash().forFile(path)) {
         case Failure(Throwable cause) -> new CheckSumResult.Failure<>(cause);
         case Success(ChecksumResult success) -> new CheckSumResult.Success<>(new ChecksumForFileResult(success.digest(), path, success.readBytes()));
       };

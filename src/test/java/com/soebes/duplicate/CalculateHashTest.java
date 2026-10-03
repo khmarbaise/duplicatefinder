@@ -29,19 +29,19 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CalculateChecksumTest {
+class CalculateHashTest {
 
-  private CalculateChecksum calculateChecksum;
+  private CalculateHash calculateHash;
 
   @BeforeEach
   void beforeEach() throws NoSuchAlgorithmException {
-    calculateChecksum = new CalculateChecksum();
+    calculateHash = new CalculateHash();
   }
 
   @Test
   void defined_content_should_calculate_the_given_result() throws IOException {
     var inputStream = Files.newInputStream(Path.of("src/test/resources/defined-content.file"));
-    var checksumResult = calculateChecksum.forFile(inputStream);
+    var checksumResult = calculateHash.forFile(inputStream);
     assertThat(checksumResult).satisfies(s -> {
       assertThat(s.readBytes()).isEqualTo(15);
       assertThat(s.digest()).containsExactly( //
