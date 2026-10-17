@@ -71,7 +71,7 @@ class DuplicateFinder {
     }
   }
 
-  static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException {
     Path searchPath = Paths.get(args[0]);
     var imageFiles = selectAllFiles(searchPath);
     var checkSumResults = imageFiles
