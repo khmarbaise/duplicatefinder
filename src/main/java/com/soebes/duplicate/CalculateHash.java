@@ -23,15 +23,12 @@ import com.soebes.duplicate.CalculateHash.Result.Failure;
 import com.soebes.duplicate.CalculateHash.Result.Success;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 final class CalculateHash {
-
-  private static final int BUFFER_SIZE = 64 * 1024;
 
   private final MessageDigest messageDigest;
 
@@ -45,23 +42,16 @@ final class CalculateHash {
   }
 
   Result<ChecksumResult> forFile(Path file) {
-    try (var fis = Files.newInputStream(file)) {
-      return new Success<>(forFile(fis));
+    try {
+      return new Success<>(hashOfFile(file));
     } catch (Exception e) {
-      return new Failure<>(e);
+      return new Failure<>(e.getCause());
     }
   }
 
-  ChecksumResult forFile(InputStream inputStream) throws IOException {
-    var dataBytes = new byte[BUFFER_SIZE];
-
-    var readBytes = 0L;
-    int nread;
-    while ((nread = inputStream.read(dataBytes)) != -1) {
-      messageDigest.update(dataBytes, 0, nread);
-      readBytes += nread;
-    }
-    return new ChecksumResult(messageDigest.digest(), readBytes);
+  ChecksumResult hashOfFile(Path file) throws IOException {
+      messageDigest.update(Files.readAllBytes(file));
+      return new ChecksumResult(messageDigest.digest(), Files.size(file));
   }
 
 }

@@ -20,7 +20,6 @@ package com.soebes.duplicate;
  */
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 
@@ -40,8 +39,8 @@ class CalculateHashTest {
 
   @Test
   void defined_content_should_calculate_the_given_result() throws IOException {
-    var inputStream = Files.newInputStream(Path.of("src/test/resources/defined-content.file"));
-    var checksumResult = calculateHash.forFile(inputStream);
+    var file = Path.of("src/test/resources/defined-content.file");
+    var checksumResult = calculateHash.hashOfFile(file);
     assertThat(checksumResult).satisfies(s -> {
       assertThat(s.readBytes()).isEqualTo(15);
       assertThat(s.digest()).containsExactly( //
